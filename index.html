@@ -2,34 +2,39 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>YZIU Bench Viewer</title>
+<title>YZIU · RESPO: bench</title>
 <style>
-    body { background:#111; color:#eee; font-family: monospace; padding:20px; }
-    .block { margin-bottom:20px; padding:10px; border:1px solid #444; }
-    input, textarea { width:100%; background:#222; color:#eee; border:1px solid #555; padding:8px; }
+  body { background:#111; color:#eee; font-family: monospace; padding:20px; }
+  .block { margin-bottom:20px; padding:10px; border:1px solid #444; }
+  input, textarea { width:100%; background:#222; color:#eee; border:1px solid #555; padding:8px; }
+  .tag { font-size:12px; opacity:0.6; margin-bottom:4px; }
 </style>
 </head>
 <body>
 
+<div class="tag">RESPO: yziu.bench</div>
 <h2>YZIU Bench Viewer</h2>
 
 <div class="block">
-    <h3>Input</h3>
-    <input id="benchInput" placeholder="type raw input...">
+  <h3>Input</h3>
+  <input id="benchInput" placeholder="type raw input...">
 </div>
 
 <div class="block">
-    <h3>Output</h3>
-    <textarea id="benchOutput" rows="6" readonly></textarea>
+  <h3>Output</h3>
+  <textarea id="benchOutput" rows="6" readonly></textarea>
 </div>
 
 <script>
-document.getElementById("benchInput").addEventListener("input", function() {
-    let v = this.value;
+  // RESPO-ID für dein System
+  const RESPO_ID = "yziu.bench";
+
+  document.getElementById("benchInput").addEventListener("input", function () {
+    const v = this.value;
     document.getElementById("benchOutput").value = v;
-});
+    // hier könnte später µ# / Toolomat / 6er-Logik andocken
+  });
 </script>
 
 </body>
 </html>
-
