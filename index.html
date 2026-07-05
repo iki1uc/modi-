@@ -1,40 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>YZIU · RESPO: bench</title>
-<style>
-  body { background:#111; color:#eee; font-family: monospace; padding:20px; }
-  .block { margin-bottom:20px; padding:10px; border:1px solid #444; }
-  input, textarea { width:100%; background:#222; color:#eee; border:1px solid #555; padding:8px; }
-  .tag { font-size:12px; opacity:0.6; margin-bottom:4px; }
-</style>
-</head>
-<body>
-
-<div class="tag">RESPO: yziu.bench</div>
-<h2>YZIU Bench Viewer</h2>
-
-<div class="block">
-  <h3>Input</h3>
-  <input id="benchInput" placeholder="type raw input...">
-</div>
-
-<div class="block">
-  <h3>Output</h3>
-  <textarea id="benchOutput" rows="6" readonly></textarea>
-</div>
-
 <script>
-  // RESPO-ID für dein System
-  const RESPO_ID = "yziu.bench";
+  // --- MODI-LISTE ---
+  const modiList = [
+    "raw",
+    "bench",
+    "orbit",
+    "pulse",
+    "verify",
+    "nc-layer"
+  ];
 
-  document.getElementById("benchInput").addEventListener("input", function () {
-    const v = this.value;
-    document.getElementById("benchOutput").value = v;
-    // hier könnte später µ# / Toolomat / 6er-Logik andocken
-  });
+  // --- MODI-ENGINE ---
+  function modiEngine(input) {
+    const mode = input.trim().toLowerCase();
+
+    if (!modiList.includes(mode)) {
+      return {
+        mode,
+        status: "FAIL",
+        msg: "Modus nicht gefunden",
+        list: modiList
+      };
+    }
+
+    switch (mode) {
+
+      case "raw":
+        return {
+          mode,
+          status: "OK",
+          msg: "RAW-Durchlauf aktiv",
+          tick: Math.floor(Math.random()*81)
+        };
+
+      case "bench":
+        return {
+          mode,
+          status: "MASTER",
+          msg: "YZIU Bench aktiv",
+          tmp: Math.random().toFixed(3)
+        };
+
+      case "orbit":
+        return {
+          mode,
+          status: "OK",
+          msg: "Orbit 81(1) aktiv",
+          pulse: Math.floor(Math.random()*81)
+        };
+
+      case "pulse":
+        return {
+          mode,
+          status: "LIVE",
+          msg: "ZACK-KLACK Pulse",
+          pulse: `${Math.floor(Math.random()*36)}:${Math.floor(Math.random()*36)}`
+        };
+
+      case "verify":
+        return {
+          mode,
+          status: "CHECK",
+          msg: "Verify-Frame aktiv",
+          verify: Math.random() > 0.5 ? "OK" : "FAIL"
+        };
+
+      case "nc-layer":
+        return {
+          mode,
+          status: "MASTER",
+          msg: "NC.link Layer aktiv",
+          core: {
+            CPU: 33,
+            RAM: 44,
+            GPU: 42,
+            ROM: 3
+          }
+        };
+    }
+  }
+
+  // --- UI ---
+  function runModi() {
+    const input = document.getElementById("modiInput").value;
+    const out = modiEngine(input);
+    document.getElementById("modiOut").textContent =
+      JSON.stringify(out, null, 2);
+  }
 </script>
-
-</body>
-</html>
