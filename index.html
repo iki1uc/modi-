@@ -1,89 +1,20 @@
-<script>
-  // --- MODI-LISTE ---
-  const modiList = [
-    "raw",
-    "bench",
-    "orbit",
-    "pulse",
-    "verify",
-    "nc-layer"
-  ];
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MODI – Mode Controller</title>
+</head>
+<body>
+    <h1>MODI – Mode Controller</h1>
+    <p>Steuert Systemmodi und Routing.</p>
 
-  // --- MODI-ENGINE ---
-  function modiEngine(input) {
-    const mode = input.trim().toLowerCase();
+    <button onclick="setMode('scan')">Scan-Modus</button>
+    <button onclick="setMode('dom')">DOM-Modus</button>
+    <button onclick="setMode('route')">Routing-Modus</button>
 
-    if (!modiList.includes(mode)) {
-      return {
-        mode,
-        status: "FAIL",
-        msg: "Modus nicht gefunden",
-        list: modiList
-      };
-    }
-
-    switch (mode) {
-
-      case "raw":
-        return {
-          mode,
-          status: "OK",
-          msg: "RAW-Durchlauf aktiv",
-          tick: Math.floor(Math.random()*81)
-        };
-
-      case "bench":
-        return {
-          mode,
-          status: "MASTER",
-          msg: "YZIU Bench aktiv",
-          tmp: Math.random().toFixed(3)
-        };
-
-      case "orbit":
-        return {
-          mode,
-          status: "OK",
-          msg: "Orbit 81(1) aktiv",
-          pulse: Math.floor(Math.random()*81)
-        };
-
-      case "pulse":
-        return {
-          mode,
-          status: "LIVE",
-          msg: "ZACK-KLACK Pulse",
-          pulse: `${Math.floor(Math.random()*36)}:${Math.floor(Math.random()*36)}`
-        };
-
-      case "verify":
-        return {
-          mode,
-          status: "CHECK",
-          msg: "Verify-Frame aktiv",
-          verify: Math.random() > 0.5 ? "OK" : "FAIL"
-        };
-
-      case "nc-layer":
-        return {
-          mode,
-          status: "MASTER",
-          msg: "NC.link Layer aktiv",
-          core: {
-            CPU: 33,
-            RAM: 44,
-            GPU: 42,
-            ROM: 3
-          }
-        };
-    }
-  }
-
-  // --- UI ---
-  function runModi() {
-    const input = document.getElementById("modiInput").value;
-    const out = modiEngine(input);
-    document.getElementById("modiOut").textContent =
-      JSON.stringify(out, null, 2);
-  }
-</script>
+    <script>
+        function setMode(mode) {
+            console.log("Mode aktiviert:", mode);
+        }
+    </script>
+</body>
+</html>
